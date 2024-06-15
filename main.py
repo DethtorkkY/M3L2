@@ -46,29 +46,29 @@ Status: {info[3]}
 Skills: {skills}
 """)
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['start'])#По комманде start бот приветствуеться и говорит о себе
 def start_command(message):
     bot.send_message(message.chat.id, """Привет! Я бот-менеджер проектов
 Помогу тебе сохранить твои проекты и информацию о них!) 
 """)
     info(message)
     
-@bot.message_handler(commands=['info'])
+@bot.message_handler(commands=['info'])#По комманде info выводится ысписок комманд и пояснение к ним
 def info(message):
     bot.send_message(message.chat.id,
 """
 Вот команды которые могут тебе помочь:
 
-/new_project - используй для добавления нового проекта
-/projects - используй для отображения всех проектов
-/update_projects - используй для изменения данных о проекте
-/skills - используй для привязки навыков к проекту
-/delete - используй для удаления проекта
+/new_project - 🤔используй для добавления нового проекта
+/projects - 👀используй для отображения всех проектов
+/update_projects - 🤯используй для изменения данных о проекте
+/skills - 😎используй для привязки навыков к проекту
+/delete - 💀используй для удаления проекта
 
-Также ты можешь ввести имя проекта и узнать информацию о нем!""")
+Также ты можешь ввести имя проекта и узнать информацию о нем!😋""")
     
 
-@bot.message_handler(commands=['new_project'])
+@bot.message_handler(commands=['new_project'])#По комманде new_project создает новую строку в базе данных с информацией о проекте пользователя
 def addtask_command(message):
     bot.send_message(message.chat.id, "Введите название проекта:")
     bot.register_next_step_handler(message, name_project)
@@ -101,7 +101,7 @@ def callback_project(message, data, statuses):
     bot.send_message(message.chat.id, "Проект сохранен")
 
 
-@bot.message_handler(commands=['skills'])
+@bot.message_handler(commands=['skills'])#По комманде skills добавляет скиллы длявыбранного проекта
 def skill_handler(message):
     user_id = message.from_user.id
     projects = manager.get_projects(user_id)
@@ -142,7 +142,7 @@ def set_skill(message, project_name, skills):
     bot.send_message(message.chat.id, f'Навык {skill} добавлен проекту {project_name}')
 
 
-@bot.message_handler(commands=['projects'])
+@bot.message_handler(commands=['projects'])#По комманде projects показывает список проектов
 def get_projects(message):
     user_id = message.from_user.id
     projects = manager.get_projects(user_id)
@@ -158,7 +158,7 @@ def callback_query(call):
     info_project(call.message, call.from_user.id, project_name)
 
 
-@bot.message_handler(commands=['delete'])
+@bot.message_handler(commands=['delete'])#По комманде delete уудаляет либо скилл либо выбранный проект
 def delete_handler(message):
     user_id = message.from_user.id
     projects = manager.get_projects(user_id)
@@ -186,7 +186,7 @@ def delete_project(message, projects):
     bot.send_message(message.chat.id, f'Проект {project} удален!')
 
 
-@bot.message_handler(commands=['update_projects'])
+@bot.message_handler(commands=['update_projects'])#По комманде updete_project обновляет информацию о проекте
 def update_project(message):
     user_id = message.from_user.id
     projects = manager.get_projects(user_id)
@@ -244,7 +244,7 @@ def update_project_step_4(message, project_name, attribute):
 
 
 @bot.message_handler(func=lambda message: True)
-def text_handler(message):
+def text_handler(message):#По отправке сообщения в чат бота он спрашивает нужена ли помощь пользователю
     user_id = message.from_user.id
     projects =[ x[2] for x in manager.get_projects(user_id)]
     project = message.text
